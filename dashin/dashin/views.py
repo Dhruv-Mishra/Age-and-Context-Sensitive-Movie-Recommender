@@ -1,6 +1,9 @@
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse, StreamingHttpResponse
 from . import models
+from .search import *
+from .recommender import *
+import pandas as pd
 
 def indexView(request):
     template = 'index.html'
@@ -55,14 +58,21 @@ def checkUser(request):
 
 
 def movie_recom(request):
-    form = request.GET
+    form = request.GET  
     query = form['query']
-
+   
+    movie_recoms = index_recommend(query)
+    movie_recoms = movie_recoms[:1]
+    recoms_age = []
+    for i in movie_recoms:
+        recoms_age.append([i[3:],19])
+    print(recoms_age)
+    movie_recoms = start(recoms_age)
     template = "results.html"
-    print(form)
+    print(movie_recoms)
     # generate and store the final result in the variable movie recoms
-    movie_recoms = ["movie1", "movie2", "movie3", "movie4","movie1", "movie2", "movie3", "movie4","movie1", "movie2", "movie3", "movie4","movie1", "movie2", "movie3", "movie4"]
+    # movie_recoms = ["movie1", "movie2", "movie3", "movie4","movie1", "movie2", "movie3", "movie4","movie1", "movie2", "movie3", "movie4","movie1", "movie2", "movie3", "movie4"]
 
-    return render(request,template, context = {'movie_recoms':movie_recoms, 'total_res':str(len(movie_recoms))})
+    return render(request,template, context = {'movie_recoms':movie_recoms[:10], 'total_res':str(len(movie_recoms))})
 
     
