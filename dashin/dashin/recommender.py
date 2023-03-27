@@ -32,6 +32,7 @@ class Recommender:
         self.df['description'] = self.df['description'].fillna('')
         self.tfidf2 = TfidfVectorizer(stop_words='english')
         self.tfidf_matrix2 = self.tfidf2.fit_transform(self.df['description'])
+        
         dataframe = pd.DataFrame(self.tfidf_matrix2.A)
         pca = PCA(n_components=3400) 
         pca.fit(dataframe)
@@ -283,9 +284,7 @@ class Recommender:
 
 def start(args):
     r = Recommender("D:\Desktop\IR\Git_Project\Information-Retrival-Project\dashin\dashin\merged_genre.csv") # DATASET PATH HERE 
-    r.addUsers([['LEGO Elves: Secrets of Elvendale', 19]])
+    r.addUsers(args)
     recoms = r.recommend()
     return recoms
     # print(len(r.cosine_sim))
-
-print(start(1))
