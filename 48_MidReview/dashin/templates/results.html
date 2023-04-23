@@ -1,0 +1,166 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <title>login</title>  
+    {% load static %}  
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>  
+</head>  
+<body>  
+
+  <nav class="navbar navbar-expand-lg bg-transparent py-2 px-5 border-bottom border-primary-subtle border-3 " style="position:absolute">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/home"> <img src="{% static 'images/logo.png' %}" style="width:50px"/>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav" style="margin-left:3%">
+        <ul class="navbar-nav text-white">
+           <li class="nav-item px-2">
+            <a class="nav-link active text-white" aria-current="page" href="/checkup">Check Vitals</a>
+          </li> 
+          <li class="nav-item">
+            <a class="nav-link active text-white" aria-current="page" href="/contact">Contact Us</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav> 
+
+  <section class="d-flex  " style="--bs-gutter-x: 0;">
+    <div class="col-lg-6 py-3 px-3 px-3 pt-5" style="position:absolute;width:100vw;height:100vh;background:rgb(112,0,209);background:linear-gradient(142deg, rgba(112,0,209,1) 0%, rgba(144,96,189,1) 61%, rgba(255,255,255,1) 100%)">
+      <div class="row ">
+    
+        {% comment %} <img src="{% static 'images/IVC.png' %}" style="width:200px"/> {% endcomment %}
+      </div>
+
+      <div class="row pb-5">
+        <h1 >
+          <b style='font-size:30px' class="text-light">Search Results</b> <br>
+        </h1>
+      </div>
+      <div class="row pt-4">
+
+        <form action="/results/" method="get">
+            <input placeholder="search movies and tv shows" id="query" name="query" value="{{current_name}}"/>
+                <button type="submit" value = "Submit" style='width:10vw' class="rounded-pill btn btn-light me-5 col-lg-7 py-3 text-transparent bg-rounded ">
+                  search
+                </button>
+            <form>
+      </div>
+
+      <div class="row py-2 px-2 text-light">
+        Total results : {{ total_res }}
+      </div>  
+      {% if movie_recoms %}
+      {% for movie in movie_recoms %}
+      
+      <div class="row py-2 px-4 text-light text-left">
+        <div class="col-6">
+          {{ movie }}
+        </div>
+
+        <div class="col-6" id={{forloop.counter0}}>
+          {% comment %} {% if not likedList.forloop.counter0 %} {% endcomment %}
+          <div onclick="isLiked( {{forloop.counter0}} ,1);">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+              <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+            </svg>
+          </div>
+          {% comment %} {% else %}
+          <div onclick="isLiked( {{forloop.counter0}} ,-1);">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" class="bi bi-heart-fill" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+            </svg>
+          </div>
+          {% endif%} {% endcomment %}
+        </div>
+      </div>
+
+      {%endfor%}
+      {%endif%}
+
+      <button onclick="sendData();" value = "Submit" style='width:10vw' class="rounded-pill btn btn-light me-5 col-lg-7 py-3 text-transparent bg-rounded ">
+        Go back
+       </button>
+  </div>
+  {% comment %} <div>
+    
+  </div> {% endcomment %}
+   {% comment %} <div class="col-lg-6 py-3 align-items-center" style="margin-left:50vw;height:100vh;background: rgb(139,103,170);
+   background: linear-gradient(142deg, rgba(139,103,170,1) 0%, rgba(105,12,210,1) 48%, rgba(3,38,148,1) 100%);clip-path: polygon(20% 0, 100% 0, 100% 100%, 0 100%);">
+     
+     <img src="{% static 'images/resultIllus.png' %}" style="margin-top:7%;padding-right:10%; width:700px"/> 
+    </div> {% endcomment %}
+
+  </section>
+</body> 
+<script>
+  var movies = JSON.parse("{{movies | escapejs}}")
+  
+
+  var likedList = []
+  console.log(movies)
+  {% comment %} console.log(movies_s) {% endcomment %}
+  for(let i = 0; i < movies.length; i++)
+    likedList[i] = false;
+
+  console.log(likedList)
+  
+</script>
+ <script>
+  function isLiked(id,x)
+  {
+    if(x==1){
+    likedList[id] = true;
+      document.getElementById(id).innerHTML = `<div onclick="isLiked( ${id} ,-1);">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" class="bi bi-heart-fill" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+        </svg>
+      </div>`
+    }
+    else {
+      likedList[id] = false;
+      document.getElementById(id).innerHTML = `<div onclick="isLiked( ${id} ,1);">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+          <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+        </svg>
+      </div>`
+    }
+    console.log(likedList)
+  }
+</script>
+<script>
+  function send_data()
+  {
+    var movies_s = JSON.stringify(likedList);
+    const movies_zip = (movies_s, likedList) => a.map((k, i) => [k, likedList[i]]);
+
+    $.ajax(
+    {
+        type:"POST",
+        url: "/movie_recoms",
+        data:{
+            'movies_list': movies_list
+        },
+     })
+  }
+</script>
+<script>
+  function send_search_res(seach_key){
+    
+
+    $.ajax(
+    {
+        type:"POST",
+        url: "/movie_recoms",
+        data:{
+            'movies_list': movies_list
+        },
+     })
+    }
+</script>
+</html>
