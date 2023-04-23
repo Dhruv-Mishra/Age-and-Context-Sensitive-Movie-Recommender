@@ -292,12 +292,13 @@ def getNum(i):
 
 def index_recommend(args):
     try:
-        inverted_index = pickle.load(open("D:\Desktop\IR\Git_Project\Information-Retrival-Project\dashin\dashin\baseline1_savefile.pickle", "rb"))
+        #inverted_index = pickle.load(open("D:\Desktop\IR\Git_Project\Information-Retrival-Project\dashin\dashin\baseline1_savefile.pickle", "rb"))
+        inverted_index = pickle.load(open("/Users/cloud9xpress/Desktop/codeCloud/dashin_front-end/48_MidReview/baseline1_savefile.pickle", "rb"))
         # print(inverted_index.inverted_ind.keys())
     except (OSError, IOError) as e:
         inverted_index = Inverted_Index()
-        df = pd.read_csv('D:\Desktop\IR\Git_Project\Information-Retrival-Project\dashin\dashin\merged_genre.csv')
-
+        # df = pd.read_csv('D:\Desktop\IR\Git_Project\Information-Retrival-Project\dashin\dashin\merged_genre.csv')
+        df = pd.read_csv('/Users/cloud9xpress/Desktop/codeCloud/dashin_front-end/48_MidReview/dashin/merged_genre.csv')
         for ind in df.index:
             f = inverted_index.new_Data(str(df['title'][ind]), str(df['title'][ind]) + " " + str(df['cast'][ind]) + " " + str(df['listed_in'][ind]) + " " + str(df['description'][ind]))
         # for j in range(1,1401): # 1,1401
