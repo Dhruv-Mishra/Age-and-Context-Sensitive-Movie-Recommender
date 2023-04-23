@@ -30,6 +30,7 @@ urlpatterns = [
     path('home/', views.homeView, name="home"),
     path('addUser/', views.addUser, name='AddUser'),
     path('checkUser/', views.checkUser, name="CheckUser"),
+    path('info/', views.movieInfo, name="MovieInfo" ),
     path('admin/', admin.site.urls),
 
 ]

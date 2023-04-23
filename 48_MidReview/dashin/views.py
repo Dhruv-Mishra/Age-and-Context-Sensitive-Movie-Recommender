@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse, StreamingHttpResponse
 from . import models
-from .search import *
+# from .search import *
 from .recommender import *
 import pandas as pd
 from django.contrib.auth import authenticate, login, logout
@@ -103,35 +103,50 @@ def checkUser(request):
 
 @csrf_exempt
 def movie_recom(request):
-    if(request.method == 'GET'):
+    if not request.user.is_authenticated:
+        return(request,'index.html')
+    elif(request.method == 'GET'):
         form = request.GET  
         query = form['query']
+        query_li = query.split(',')
+
+        for i in range(len(query_li)):
+            query_li[i] = query_li[i].strip()
         
         user = request.user
-        profile = models.Profile.objects.get(user=user)
-        search = models.Search(user = user, keyword = query)
+        profile = models.Profile.objects.all().filter(user=user).first()
+        search = models.Search(keyword = query)
         
 
 
-        movie_recoms = index_recommend(query)
+        movie_recoms_info = start(query)
+        movie_recoms = []
+        for i in movie_recoms_info:
+            movie_recoms.append(i['Movie_Title'])
+
+        
         movie_recoms = movie_recoms[:5]
-        recoms_age = []
+        
         # for i in movie_recoms:
         #     recoms_age.append([i[3:],19])
         # print(recoms_age)
         # movie_recoms = start(recoms_age)
         template = "results.html"
-        print(movie_recoms)
+        # print(movie_recoms)
         
         # generate and store the final result in the variable movie recoms
         # movie_recoms = ["movie1", "movie2", "movie3", "movie4","movie1", "movie2", "movie3", "movie4","movie1", "movie2", "movie3", "movie4","movie1", "movie2", "movie3", "movie4"]
-        search.results = movie_recoms # change to list of movie objecs
+        movie_recoms_objects = []
+        for i in movie_recom:
+            movie_recom_objects.append(model.Movie().objects.filter(movie_name=i).first())
+        search.results = movie_recoms_objects # change to list of movie objecs
         search.save()
         search_history = profile.search_history
         search_history.append(search)
+        profile.save()
 
 
-        return render(request,template, context = {'movie_recoms':movie_recoms, 'movies':json.dumps(movie_recoms), 'total_res':str(len(movie_recoms))})
+        return render(request,template, context = {'movie_recoms':movie_recoms, 'movies':json.dumps(movie_recoms), 'total_res':str(len(movie_recoms)), 'keyword':str(query) })
 
     elif(request.method == 'POST'):
         user = request.user
@@ -140,7 +155,7 @@ def movie_recom(request):
         data = request.POST
 
         movies_list = data['movies_list']
-        search = models.Search.objects.filter(data['keyword']).order_by('time').values().first()
+        search = models.Search.objects.filter(keyword=data['keyword']).order_by('time').values().first()
         liked_mov = []
         for movie in movies_list:
             cur_mov = models.Movies.objects.filter.first()
@@ -154,5 +169,19 @@ def movie_recom(request):
         search.save()
 
 
-# def movieInfo(models.Model):
+def movieInfo(request):
+    if request.method == 'POST':
+        info = request.POST
+        keyword = info['keyword']
+        movie_name = info['movie_name']
+
+        f = models.Movie().objects.filter(movie_name=movie_name).first()
+        movie_url = f.movie_url
+        movie_desc = f.movie_desc
+
+        template = 'moviePage.html'
+
+    return render(request, template, context = {'movie_url':movie_url, 'movie_name':movie_name, 'movie_desc':movie_desc })
+
+
     
