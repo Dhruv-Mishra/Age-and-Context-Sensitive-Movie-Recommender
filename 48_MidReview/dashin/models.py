@@ -4,13 +4,12 @@ from django.contrib.auth.models import User
 class Movie(models.Model):
     movie_id = models.CharField(primary_key=True, max_length=200)
     movie_name = models.CharField(max_length=200)
-    click_through_rate = models.FloatField()
+    click_through_rate = models.FloatField(default=0)
 
-    num_of_times_clicked = models.IntegerField()
-    num_of_impressions = models.IntegerField()
+    num_of_times_clicked = models.IntegerField(default=0)
+    num_of_impressions = models.IntegerField(default=0)
 
     rating = models.FloatField()
-    review_num = models.IntegerField()
     image_url = models.ImageField()
     description = models.CharField(max_length=1000)
     movie_genre = [] #list of genres

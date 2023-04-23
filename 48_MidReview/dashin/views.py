@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 import json
 from django.views.decorators.csrf import csrf_exempt
+import pandas as pd
 
 
 def indexView(request):
@@ -153,10 +154,5 @@ def movie_recom(request):
         search.save()
 
 
-def movieInfo(models.Model):
-    
-
-
-    
-
+# def movieInfo(models.Model):
     
