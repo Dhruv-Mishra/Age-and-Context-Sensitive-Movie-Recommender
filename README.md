@@ -33,5 +33,5 @@ To query, enter all the movies you like separated by commas. The system will the
 NOTE: Upon the first run, the system may take longer to generate the queries as the recommender is calculated. After this, all the queries will be processed almost instantaneously. <br>
 
 Once the recommendations have been generated, you may click them to learn more about them. <br>
-If you like the recommendations, make sure to add the movie to your wishlist by pressing the heart button displayed on the movie page or the recommendations page and help us collect data on our recommendations. <br>
+If you like the recommendations, add the movie to your wishlist by pressing the heart button displayed on the movie page or the recommendations page and help us collect data on our recommendations. <br>
 
