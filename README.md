@@ -6,23 +6,15 @@ You need to install the following prerequisites: <br>
 You need to have Python installed on your system.
 
 ## Prerequisites:
--Django Framework <br>
--Tensorflow <br>
--Tensorflow Hub <br>
--Pandas  <br>
--Numpy  <br>
--Pickle <br>
--Sklearn <br>
--Difflib <br>
+&nbsp;&nbsp;&nbsp;&nbsp; - `Django Framework`<br> <br>
+&nbsp;&nbsp;&nbsp;&nbsp; - `TensorFlow`<br>
+&nbsp;&nbsp;&nbsp;&nbsp; - `TensorFlow Hub`<br>
+&nbsp;&nbsp;&nbsp;&nbsp; - `Pandas`<br>
+&nbsp;&nbsp;&nbsp;&nbsp; - `Numpy`<br>
+&nbsp;&nbsp;&nbsp;&nbsp; - `Pickle`<br>
+&nbsp;&nbsp;&nbsp;&nbsp; - `Sklearn`<br>
+&nbsp;&nbsp;&nbsp;&nbsp; - `Difflib`<br>
 
-     - Django Framework
-     - Tensorflow
-     - Tensorflow Hub
-     - Pandas
-     - Numpy
-     - Sklearn
-     - Pickle
-     - Difflib
 Ensure that you have at least 200MB of free space on your Hard Drive <br>
 
 ## How to Run:
