@@ -6,7 +6,7 @@ You need to install the following prerequisites: <br>
 You need to have Python installed on your system.
 
 ## Prerequisites:
-&nbsp;&nbsp;&nbsp;&nbsp; - `Django Framework`<br> <br>
+&nbsp;&nbsp;&nbsp;&nbsp; - `Django Framework`<br>
 &nbsp;&nbsp;&nbsp;&nbsp; - `TensorFlow`<br>
 &nbsp;&nbsp;&nbsp;&nbsp; - `TensorFlow Hub`<br>
 &nbsp;&nbsp;&nbsp;&nbsp; - `Pandas`<br>
